@@ -4,7 +4,11 @@
 //komik dan game
 
 class Produk{
-    public $judul,$penulis,$penerbit,$harga;
+    public $judul,$penulis,$penerbit;
+
+    protected $diskon = 0;
+
+    private $harga;
 
     public function __construct($judul = "judul",$penulis = "penulis",$penerbit = "penerbit",$harga =0)
     {
@@ -12,6 +16,10 @@ class Produk{
         $this->penulis = $penulis;
         $this->penerbit = $penerbit;
         $this->harga = $harga;
+    }
+
+    public function getHarga(){
+        return $this->harga - ($this->harga*$this->diskon/100);
     }
 
     // public function sayHello(){
@@ -43,11 +51,19 @@ class Komik extends Produk{
 
 class Game extends Produk{
     public $waktuMain;
+
+
+
     public function __construct($judul = "judul",$penulis = "penulis",$penerbit = "penerbit",$harga =0,$waktuMain = 0)
     {
         parent::__construct($judul,$penulis,$penerbit,$harga);
         $this->waktuMain = $waktuMain;
     }
+
+    public function setDiskon($diskon){
+        $this->diskon = $diskon;
+    }
+
     public function getInfoProduk()
     {
         $str= "Game : " .parent::getInfoProduk()." ~ {$this->waktuMain}Jam.";
@@ -77,3 +93,5 @@ echo $produk2->getInfoProduk();
 // $infoProduk1 = new CetakInfoProduk();
 // $infoProduk1->cetak($produk1);
 echo "<hr>";
+$produk2->setDiskon(5);
+echo $produk2->getHarga();
